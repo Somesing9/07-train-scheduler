@@ -16,15 +16,16 @@
 <body>
   <div class="container">
     <div class="jumbotron">
-      <h1>Anytime is Train Time</h1>
+      <h1>Train Times</h1>
       <p>Choo Choo.</p>
+      <p class="message"></p>
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Current Train Times</h3>
       </div>
       <div class="panel-body">
-        <table class="table">
+        <table class="table table--trainSchedule">
           <thead>
             <tr>
               <th>Train Name</th>
@@ -66,31 +67,35 @@
         <h3 class="panel-title">Add Train</h3>
       </div>
       <div class="panel-body">
-        <form>
+        <form id="form--train">
           <div class="form-group">
             <label for="trainName">Train Name</label>
-            <input type="text" id="trainName" class="form-control" placeholder="Name of Train">
+            <input type="text" id="trainName" class="form-control" placeholder="Name of Train" >
           </div>
           <div class="form-group">
-            <label for="destination">Destination</label>
-            <input type="text" id="destination" class="form-control" placeholder="Destination">
+            <label for="trainDestination">Destination</label>
+            <input type="text" id="trainDestination" class="form-control" placeholder="Destination" >
           </div>
           <div class="form-group">
             <label for="">First Train Time (HH:mm - military time)</label>
-            <input type="text" id="trainTime" class="form-control" placeholder="ex: 13:20 (HH:mm - military time)">
+            <input type="text" id="trainTime" class="form-control" placeholder="ex: 13:20 (HH:mm - military time)" >
           </div>
           <div class="form-group">
-            <label for="frequency">Frequency (mins)</label>
-            <input type="text" id="frequency" class="form-control" placeholder="Frequency in minutes">
+            <label for="trainFrequency">Frequency (mins)</label>
+            <input type="text" id="trainFrequency" class="form-control" placeholder="Frequency in minutes" >
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button type="submit" id="btnSubmit" class="btn btn-default">Submit</button>
         </form>
       </div>
     </div>
   </div>
   <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/jquery.validate.js"></script>
+  <script src="./js/additional-methods.js"></script>
   <script src="./js/train.js"></script>
+
+
 </body>
 
 </html>

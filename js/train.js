@@ -1,28 +1,66 @@
-$("#btn-search").on("click", function() {
-    // var searchTerm = $("#search-term");
-    // var records = $("#records");
-    // var startYear = $("#start-year");
-    // var endYear = $("#end-year");
+var config = {
+  apiKey: "AIzaSyAvYe3ro1TsDYbElF0DW4yk_BCj_Yzn1cU",
+  authDomain: "train-scheduler-9113f.firebaseapp.com",
+  databaseURL: "https://train-scheduler-9113f.firebaseio.com",
+  projectId: "train-scheduler-9113f",
+  storageBucket: "train-scheduler-9113f.appspot.com",
+  messagingSenderId: "246516435657"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 
-	var searchTerm = "lebron";
-    var records = $("#records");
-    var startYear = "2001";
-    var endYear = "2010";
+database.ref().on("value", function(snapshot) {
+    var data = snapshot.val();
+    $(".table--trainSchedule tbody").empty();
+    if (data) {
+      for (var key in data) {
+        var thisObject = data[key];
+        console.log(data[key]);
+        var newRow = "<tr> \
+         <td>" + data[key].trainName.toString() + "</td> \
+         <td>" + data[key].trainDestination.toString() + "</td> \
+         <td>" + data[key].trainFrequency.toString() + "</td> \
+         <td>" + data[key].trainTime.toString() + "</td> \
+         </tr>";
+        $(".table--trainSchedule tbody").append(newRow);
+        console.log(newRow);
+      }
+    }
+    else {
+      $(".table--trainSchedule tbody").append("<tr><td>There are no trains on the schedule. Add one using the form below</td></tr>");
+    }
+    // for (var key in data) {
+    //   var thisObject = data[key];
+    //   console.log(data[key]);
+    //   var newRow = "<tr> \
+    //     <td>" + data[key].trainName.toString() + "</td> \
+    //     <td>" + data[key].trainDestination.toString() + "</td> \
+    //     <td>" + data[key].trainFrequency.toString() + "</td> \
+    //     <td>" + data[key].trainTime.toString() + "</td> \
+    //     </tr>";
+    //   $(".table--trainSchedule tbody").append(newRow);
+    //   console.log(newRow);
+    // }
+  },
+  function(errorObject) {
+    console.log("The read failed: " + errorObject.code)
+    $(".table--trainSchedule tbody").append("There are currently no trains scheduled. Add one below.");
+  });
 
-    // Built by LucyBot. www.lucybot.com
-    var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-    url += '?' + $.param({
-        'api-key': "1404ec14afd94ed6ad856d78a72c23d1",
-        'q': searchTerm,
-        'begin_date': startYear + "0101",
-        'end_date': endYear + "0101"
-    });
-    $.ajax({
-        url: url,
-        method: 'GET',
-    }).done(function(result) {
-        console.log(result);
-    }).fail(function(err) {
-        throw err;
-    });
+
+$("#btnSubmit").on("click", function() {
+  // event.preventDefault();
+  var _trainName = $("#trainName").val().trim();
+  var _trainDestination = $("#trainDestination").val().trim();
+  var _trainTime = $("#trainTime").val().trim();
+  var _trainFrequency = $("#trainFrequency").val().trim();
+  database.ref().push({
+    trainName: _trainName,
+    trainDestination: _trainDestination,
+    trainTime: _trainTime,
+    trainFrequency: _trainFrequency
+  });
+
+  console.log(trainName + " " + trainDestination + " " + trainTime + " " + trainFrequency);
+
 });
