@@ -15,37 +15,36 @@ database.ref().on("value", function(snapshot) {
     if (data) {
       for (var key in data) {
         var thisObject = data[key];
-        console.log(data[key]);
+        // console.log(data[key]);
+
+        // Calculate time till next train
+        var currentTime = moment().format("HH:mm");
+        currentTime = moment(currentTime, "HH:mm");
+        var initialTrain = moment(thisObject.trainTime, "HH:mm");
+        var minutesPassed = moment.duration(currentTime.diff(initialTrain)).as('m')
+        var minsTillNextTrain = Math.round(thisObject.trainFrequency - (minutesPassed % thisObject.trainFrequency));
+
         var newRow = "<tr> \
-         <td>" + data[key].trainName.toString() + "</td> \
-         <td>" + data[key].trainDestination.toString() + "</td> \
-         <td>" + data[key].trainFrequency.toString() + "</td> \
-         <td>" + data[key].trainTime.toString() + "</td> \
+         <td>" + thisObject.trainName.toString() + "</td> \
+         <td>" + thisObject.trainDestination.toString() + "</td> \
+         <td>" + thisObject.trainFrequency.toString() + "</td> \
+         <td>" + moment().add(minsTillNextTrain, 'm').format('h:mm A') + "</td> \
+         <td>" + minsTillNextTrain + "</td> \
+         <td><button class='btn btn-default btn-sm' role='button' data-toggle='modal' data-target='#modal--employee-edit'>Edit</button></td> \
+         <td><button class='btn btn-default btn-sm btn-delete' role='button' data-id='" + key + "'>Delete</button></td> \
          </tr>";
         $(".table--trainSchedule tbody").append(newRow);
-        console.log(newRow);
+        // console.log(newRow);
       }
+    } else {
+      $(".table--trainSchedule tbody").append("There are no trains on the schedule. Add one")
     }
-    else {
-      $(".table--trainSchedule tbody").append("<tr><td>There are no trains on the schedule. Add one using the form below</td></tr>");
-    }
-    // for (var key in data) {
-    //   var thisObject = data[key];
-    //   console.log(data[key]);
-    //   var newRow = "<tr> \
-    //     <td>" + data[key].trainName.toString() + "</td> \
-    //     <td>" + data[key].trainDestination.toString() + "</td> \
-    //     <td>" + data[key].trainFrequency.toString() + "</td> \
-    //     <td>" + data[key].trainTime.toString() + "</td> \
-    //     </tr>";
-    //   $(".table--trainSchedule tbody").append(newRow);
-    //   console.log(newRow);
-    // }
   },
   function(errorObject) {
     console.log("The read failed: " + errorObject.code)
-    $(".table--trainSchedule tbody").append("There are currently no trains scheduled. Add one below.");
-  });
+    $(".table--trainSchedule tbody").append("Error getting train schedule!");
+  }
+);
 
 
 $("#btnSubmit").on("click", function() {
@@ -60,7 +59,4 @@ $("#btnSubmit").on("click", function() {
     trainTime: _trainTime,
     trainFrequency: _trainFrequency
   });
-
-  console.log(trainName + " " + trainDestination + " " + trainTime + " " + trainFrequency);
-
 });
