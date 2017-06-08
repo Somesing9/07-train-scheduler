@@ -15,7 +15,7 @@
 
 <body>
   <div class="container">
-    <div class="jumbotron">
+    <div class="jumbotron text-center">
       <h1>Train Times</h1>
       <p>Choo Choo.</p>
       <p class="message"></p>
@@ -38,27 +38,7 @@
             </tr>
           </thead>
           <tbody>
-<!--             <tr>
-              <td>Trenton Express</td>
-              <td>Trenton</td>
-              <td>25</td>
-              <td>05:35 PM</td>
-              <td>Minutes Away</td>
-            </tr>
-            <tr>
-              <td>Oregon Trail</td>
-              <td>Salem, Oregon</td>
-              <td>2600</td>
-              <td>01:39 PM</td>
-              <td>1154</td>
-            </tr>
-            <tr>
-              <td>Boston Bus</td>
-              <td>Boston</td>
-              <td>65</td>
-              <td>05:50 PM</td>
-              <td>25</td>
-            </tr> -->
+            <!-- Trains go here -->
           </tbody>
         </table>
       </div>
@@ -72,24 +52,67 @@
         <form id="form--train">
           <div class="form-group">
             <label for="trainName">Train Name</label>
-            <input type="text" id="trainName" class="form-control" placeholder="Name of Train" >
+            <input type="text" id="trainName" name="trainName" class="form-control" placeholder="Name of Train">
           </div>
           <div class="form-group">
             <label for="trainDestination">Destination</label>
-            <input type="text" id="trainDestination" class="form-control" placeholder="Destination" >
+            <input type="text" id="trainDestination" name="trainDestination" class="form-control" placeholder="Destination">
           </div>
           <div class="form-group">
-            <label for="">First Train Time (HH:mm - military time)</label>
-            <input type="text" id="trainTime" class="form-control" placeholder="ex: 13:20 (HH:mm - military time)" >
+            <label for="trainTime">First Train Time (HH:mm - military time)</label>
+            <input type="text" id="trainTime" name="trainTime" class="form-control" placeholder="ex: 13:20 (HH:mm - military time)">
           </div>
           <div class="form-group">
             <label for="trainFrequency">Frequency (mins)</label>
-            <input type="text" id="trainFrequency" class="form-control" placeholder="Frequency in minutes" >
+            <input type="text" id="trainFrequency" name="trainFrequency" class="form-control" placeholder="Frequency in minutes">
           </div>
           <button type="submit" id="btnSubmit" class="btn btn-default">Submit</button>
         </form>
       </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal--train-edit" tabindex="-1" role="dialog" aria-labelledby="modal--train-label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <!-- <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modal--train-label">Train Edit</h4>
+          </div> -->
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Edit Train</h3>
+              </div>
+              <div class="panel-body">
+                <form id="form--train-edit">
+                  <div class="form-group">
+                    <label for="trainNameEdit">Train Name</label>
+                    <input type="text" id="trainNameEdit" name="trainNameEdit" class="form-control" placeholder="Name of Train">
+                  </div>
+                  <div class="form-group">
+                    <label for="trainDestinationEdit">Destination</label>
+                    <input type="text" id="trainDestinationEdit" name="trainDestinationEdit" class="form-control" placeholder="Destination">
+                  </div>
+                  <div class="form-group">
+                    <label for="trainTimeEdit">First Train Time (HH:mm - military time)</label>
+                    <input type="text" id="trainTimeEdit" name="trainTimeEdit" class="form-control" placeholder="ex: 13:20 (HH:mm - military time)">
+                  </div>
+                  <div class="form-group">
+                    <label for="trainFrequencyEdit">Frequency (mins)</label>
+                    <input type="text" id="trainFrequencyEdit" name="trainFrequencyEdit" class="form-control" placeholder="Frequency in minutes">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" id="btnSaveChanges" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
   </div>
   <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
@@ -97,8 +120,10 @@
   <script src="./js/additional-methods.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
   <script src="./js/train.js"></script>
-
-
+  <script type="text/javascript">
+    $("#form-train").validate();
+    $("#form--train-edit").validate();
+  </script>
 </body>
 
 </html>
