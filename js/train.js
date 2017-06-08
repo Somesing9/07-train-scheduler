@@ -43,9 +43,6 @@ function logout() {
   })
 };
 
-
-
-
 // Populate the table with the list of trains
 database.ref().on("value", function(snapshot) {
     var data = snapshot.val();
