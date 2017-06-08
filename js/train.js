@@ -91,17 +91,19 @@ $(".table--trainSchedule").on("click", ".btn-edit", function() {
   var trainRef = database.ref().child(trainID);
   trainRef.on('value', function(snapshot) {
     var trainEdit = snapshot.val();
-    $("#trainNameEdit").val(trainEdit.trainName).attr("data-id", trainID);
-    $("#trainDestinationEdit").val(trainEdit.trainDestination);
-    $("#trainTimeEdit").val(trainEdit.trainTime);
-    $("#trainFrequencyEdit").val(trainEdit.trainFrequency);
+    if (trainEdit) {
+      $("#trainNameEdit").val(trainEdit.trainName).attr("data-id", trainID);
+      $("#trainDestinationEdit").val(trainEdit.trainDestination);
+      $("#trainTimeEdit").val(trainEdit.trainTime);
+      $("#trainFrequencyEdit").val(trainEdit.trainFrequency);
+    }
+
   });
 });
 
 
 $("#btnSaveChanges").on("click", function() {
-  if($("#form--train-edit").valid())
-  {
+  if ($("#form--train-edit").valid()) {
     EditTrain();
   }
 });
@@ -131,16 +133,16 @@ $.validator.addMethod("time", function(value, element) {
 
 $("#form--train").validate({
   rules: {
-    trainName : "required",
-    trainDestination : "required",
-    trainTime : {
-      required : true,
-      time : true
+    trainName: "required",
+    trainDestination: "required",
+    trainTime: {
+      required: true,
+      time: true
     },
     trainFrequency: {
-      required : true,
-      digits : true,
-      min : 1
+      required: true,
+      digits: true,
+      min: 1
     }
   },
   submitHandler: function(form, event) {
@@ -151,16 +153,16 @@ $("#form--train").validate({
 
 $("#form--train-edit").validate({
   rules: {
-    trainNameEdit : "required",
-    trainDestinationEdit : "required",
-    trainTimeEdit : {
-      required : true,
-      time : true
+    trainNameEdit: "required",
+    trainDestinationEdit: "required",
+    trainTimeEdit: {
+      required: true,
+      time: true
     },
     trainFrequencyEdit: {
-      required : true,
-      digits : true,
-      min : 1
+      required: true,
+      digits: true,
+      min: 1
     }
   },
   submitHandler: function(form, event) {
